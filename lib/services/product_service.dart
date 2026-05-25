@@ -11,4 +11,10 @@ class ProductService {
     var response = await ApiConnect.dio.get("product/$id");
     return response;
   }
+
+  //Featurd Product
+   static Future getFeaturedProducts() async{
+    var response = await ApiConnect.dio.get("featured-products");
+    return response;
+  }
 }

@@ -38,6 +38,7 @@ dependencies:
   gap: ^3.0.1
   dio: ^5.9.2
   flutter_html: ^3.0.0
+  carousel_slider: ^5.1.2
 
 dev_dependencies:
   flutter_test:
