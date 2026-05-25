@@ -1,0 +1,12 @@
+import 'package:ecommerce/controller/category_controller.dart';
+import 'package:ecommerce/controller/product_controller.dart';
+import 'package:get/get.dart';
+
+class ControllerBinding extends Bindings{
+  @override
+  void dependencies() {
+    Get.put<ProductController>(ProductController(),permanent: true);
+    Get.put<CategoryController>(CategoryController(),permanent: true);
+  }
+
+}
