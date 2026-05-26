@@ -1,5 +1,8 @@
 import 'package:ecommerce/bindings/controller_binding.dart';
 import 'package:ecommerce/views/home_view.dart';
+import 'package:ecommerce/views/login_view.dart';
+import 'package:ecommerce/views/register_view.dart';
+import 'package:ecommerce/views/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,7 +22,7 @@ class MyApp extends StatelessWidget {
         
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: HomeView(),
+      home: SplashView(),
       initialBinding: ControllerBinding(),
     );
   }
