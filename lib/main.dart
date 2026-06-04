@@ -1,12 +1,13 @@
 import 'package:ecommerce/bindings/controller_binding.dart';
-import 'package:ecommerce/views/home_view.dart';
-import 'package:ecommerce/views/login_view.dart';
-import 'package:ecommerce/views/register_view.dart';
+import 'package:ecommerce/routes/app_pages.dart';
+import 'package:ecommerce/routes/app_routes.dart';
 import 'package:ecommerce/views/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
+void main() async{
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -22,8 +23,9 @@ class MyApp extends StatelessWidget {
         
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: SplashView(),
+      initialRoute: AppRoutes.splash,
       initialBinding: ControllerBinding(),
+      getPages: AppPages.routes,
     );
   }
 }

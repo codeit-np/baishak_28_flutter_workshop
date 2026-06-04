@@ -1,6 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecommerce/controller/cart_controller.dart';
 import 'package:ecommerce/controller/category_controller.dart';
 import 'package:ecommerce/controller/product_controller.dart';
+import 'package:ecommerce/controller/storage_controller.dart';
+import 'package:ecommerce/views/cart_view.dart';
+import 'package:ecommerce/views/login_view.dart';
 import 'package:ecommerce/views/product_by_category_view.dart';
 import 'package:ecommerce/views/product_view.dart';
 import 'package:flutter/material.dart';
@@ -14,10 +18,53 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     var productController = Get.find<ProductController>();
     var categoryController = Get.find<CategoryController>();
+    var stroageController = Get.find<StorageController>();
+    var cartController = Get.find<CartController>();
 
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
+        actions: [
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  Get.to(() => CartView());
+                },
+                icon: Icon(Icons.shopping_cart_checkout),
+              ),
+
+              Obx(() {
+                return Text("${cartController.cartItems.value.data.length}");
+              }),
+            ],
+          ),
+          IconButton(
+            onPressed: () {
+              Get.defaultDialog(
+                barrierDismissible: false,
+                title: "Logout",
+                content: Text("Do you want to logout?"),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: Text("Cancel"),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      stroageController.logout();
+                      Get.offAll(() => LoginView());
+                    },
+                    child: Text("Yes"),
+                  ),
+                ],
+              );
+            },
+            icon: Icon(Icons.logout),
+          ),
+        ],
         title: const Text(
           "ShopSphere",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
@@ -106,7 +153,10 @@ class HomeView extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
                       "Browse Categories",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   const Gap(12),
@@ -115,26 +165,38 @@ class HomeView extends StatelessWidget {
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      itemCount: categoryController.categories.value.data.length,
+                      itemCount:
+                          categoryController.categories.value.data.length,
                       itemBuilder: (context, index) {
-                        var category = categoryController.categories.value.data[index];
+                        var category =
+                            categoryController.categories.value.data[index];
                         return Padding(
                           padding: const EdgeInsets.only(right: 12),
                           child: GestureDetector(
                             onTap: () {
-                              categoryController.getProductByCategory(category.id!);
+                              categoryController.getProductByCategory(
+                                category.id!,
+                              );
                               Get.to(() => ProductByCategoryView());
                             },
                             child: Chip(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 4,
+                              ),
                               backgroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
-                                side: const BorderSide(color: Colors.deepPurple, width: 1.2),
+                                side: const BorderSide(
+                                  color: Colors.deepPurple,
+                                  width: 1.2,
+                                ),
                               ),
                               label: Text(
                                 "${category.title}",
-                                style: const TextStyle(fontWeight: FontWeight.w500),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
                           ),
@@ -200,17 +262,23 @@ class HomeView extends StatelessWidget {
                           children: [
                             // Image
                             ClipRRect(
-                              borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
+                              borderRadius: const BorderRadius.vertical(
+                                top: Radius.circular(18),
+                              ),
                               child: Image.network(
                                 "${product.image}",
                                 height: 160,
                                 width: double.infinity,
                                 fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) => Container(
-                                  height: 160,
-                                  color: Colors.grey[100],
-                                  child: const Icon(Icons.image_not_supported, color: Colors.grey),
-                                ),
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Container(
+                                      height: 160,
+                                      color: Colors.grey[100],
+                                      child: const Icon(
+                                        Icons.image_not_supported,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
                               ),
                             ),
 
@@ -246,15 +314,22 @@ class HomeView extends StatelessWidget {
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.deepPurple,
                                         foregroundColor: Colors.white,
-                                        padding: const EdgeInsets.symmetric(vertical: 10),
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 10,
+                                        ),
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius: BorderRadius.circular(
+                                            10,
+                                          ),
                                         ),
                                         elevation: 0,
                                       ),
                                       child: const Text(
                                         "Add to Cart",
-                                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                       ),
                                     ),
                                   ),

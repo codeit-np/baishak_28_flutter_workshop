@@ -1,14 +1,15 @@
+import 'package:ecommerce/controller/cart_controller.dart';
 import 'package:ecommerce/controller/product_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/get_core.dart';
 
 class ProductView extends GetView<ProductController> {
 
   @override
   Widget build(BuildContext context) {
-
+    var cartController = Get.find<CartController>();
     return Scaffold(
       backgroundColor: Colors.grey[50],
       body: Obx((){
@@ -129,13 +130,11 @@ class ProductView extends GetView<ProductController> {
                     width: double.infinity,
                     height: 56,
                     child: ElevatedButton(
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("${controller.productDetail.value.product!.title} added to cart!"),
-                            backgroundColor: Colors.deepPurple,
-                          ),
-                        );
+                      onPressed: () async {
+                        Loader.show(context);
+                          await cartController.addToCart(controller.productDetail.value.product!.id!,1);
+                          await cartController.getCartItems();
+                        Loader.hide();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.deepPurple,

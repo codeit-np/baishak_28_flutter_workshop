@@ -1,4 +1,6 @@
+import 'package:ecommerce/controller/storage_controller.dart';
 import 'package:ecommerce/model/register_model.dart';
+import 'package:ecommerce/routes/app_routes.dart';
 import 'package:ecommerce/services/auth_service.dart';
 import 'package:ecommerce/views/home_view.dart';
 import 'package:ecommerce/views/login_view.dart';
@@ -19,9 +21,21 @@ class AuthController extends GetxController {
   var password = TextEditingController();
 
   void checkAuth() {
-    Future.delayed(Duration(seconds: 3), () {
-      Get.off(() => LoginView());
+    var storageController = Get.find<StorageController>();
+    var token = storageController.getToken();
+  
+    if(token != null){
+      //Dashboard
+       Future.delayed(Duration(seconds: 3), () {
+       Get.offNamed(AppRoutes.home);
     });
+    }else{
+      // login page
+       Future.delayed(Duration(seconds: 3), () {
+      Get.offNamed(AppRoutes.login);
+    });
+    }
+   
   }
 
   Future register() async {
@@ -53,6 +67,8 @@ class AuthController extends GetxController {
         registerUser.value = RegisterModel.fromJson(response.data);
         if (registerUser.value.success == true) {
           //Goto dashpard
+          var storageController = Get.find<StorageController>();
+          storageController.saveLogin(registerUser.value.token!);
           Get.offAll(() => HomeView());
         } else {
           Get.snackbar("Error", "Something went wrong");
