@@ -3,7 +3,6 @@ import 'package:ecommerce/model/register_model.dart';
 import 'package:ecommerce/routes/app_routes.dart';
 import 'package:ecommerce/services/auth_service.dart';
 import 'package:ecommerce/views/home_view.dart';
-import 'package:ecommerce/views/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

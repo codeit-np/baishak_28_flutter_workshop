@@ -41,6 +41,7 @@ dependencies:
   carousel_slider: ^5.1.2
   flutter_overlay_loader: ^2.0.0
   get_storage: ^2.1.1
+  image_picker: ^1.2.2
 
 dev_dependencies:
   flutter_test:

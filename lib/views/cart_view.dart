@@ -1,4 +1,5 @@
 import 'package:ecommerce/controller/cart_controller.dart';
+import 'package:ecommerce/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/state_manager.dart';
@@ -17,7 +18,9 @@ class CartView extends GetView<CartController> {
             style: FilledButton.styleFrom(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed(AppRoutes.order);
+            },
             child: Text("Proceed to Checkout"),
           ),
         ),

@@ -3,6 +3,8 @@ import 'package:ecommerce/routes/app_routes.dart';
 import 'package:ecommerce/views/cart_view.dart';
 import 'package:ecommerce/views/home_view.dart';
 import 'package:ecommerce/views/login_view.dart';
+import 'package:ecommerce/views/order_complete.dart';
+import 'package:ecommerce/views/order_view.dart';
 import 'package:ecommerce/views/product_by_category_view.dart';
 import 'package:ecommerce/views/product_view.dart';
 import 'package:ecommerce/views/register_view.dart';
@@ -18,5 +20,7 @@ class AppPages {
       GetPage(name: AppRoutes.productByCategories, page: () => ProductByCategoryView()),
       GetPage(name: AppRoutes.productDetail, page: () => ProductView()),
       GetPage(name: AppRoutes.carts, page: () => CartView()),
+      GetPage(name: AppRoutes.order, page: () => OrderView()),
+      GetPage(name: AppRoutes.orderComplete, page: () => OrderComplete()),
   ];
 }
